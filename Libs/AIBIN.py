@@ -1799,9 +1799,12 @@ class AIBIN:
 					'raw': raw[i+1],
 					'type': param_type.__name__[3:],
 				})
-			  			  
+
 				if param_type in [self.ai_unit, self.ai_building]:
-				  command['parameters'][-1]['name'] = self.tbl.strings[raw[i+1]].split('\x00')[0]
+					command['parameters'][-1]['name'] = self.tbl.strings[raw[i+1]].split('\x00')[0]
+					command['parameters'][-1]['minerals'] = self.unitsdat.get_value(raw[i+1], 'MineralCost')
+					command['parameters'][-1]['gas'] = self.unitsdat.get_value(raw[i+1], 'VespeneCost')
+					command['parameters'][-1]['time'] = self.unitsdat.get_value(raw[i+1], 'BuildTime')
 
 			return command
 
