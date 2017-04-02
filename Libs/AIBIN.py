@@ -1805,6 +1805,7 @@ class AIBIN:
 					command['parameters'][-1]['minerals'] = self.unitsdat.get_value(raw[i+1], 'MineralCost')
 					command['parameters'][-1]['gas'] = self.unitsdat.get_value(raw[i+1], 'VespeneCost')
 					command['parameters'][-1]['time'] = self.unitsdat.get_value(raw[i+1], 'BuildTime')
+					command['parameters'][-1]['supply'] = .5 * (int(self.unitsdat.get_value(raw[i+1], 'SupplyRequired')) - int(self.unitsdat.get_value(raw[i+1], 'SupplyProvided')))
 
 			return command
 
