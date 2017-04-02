@@ -1783,6 +1783,30 @@ class AIBIN:
 			self.bwscript.compile(bwscript, extra)
 		return warnings
 
+	def export_commands(self, script_name):
+		""" Returns all commands in a script as a simple list of dicts """
+	  
+		def convert_command(raw):
+			command = {
+				'name': self.short_labels[raw[0]],
+				'opcode':raw[0],
+				'parameters':[]
+			}
+		
+			param_types = self.parameters[raw[0]] or []
+			for i, param_type in enumerate(param_types):
+				command['parameters'].append({
+					'raw': raw[i+1],
+					'type': param_type.__name__[3:],
+				})
+			  			  
+				if param_type in [self.ai_unit, self.ai_building]:
+				  command['parameters'][-1]['name'] = self.tbl.strings[raw[i+1]].split('\x00')[0]
+
+			return command
+
+		return map(convert_command, self.ais[script_name][3])
+
 class BWBIN(AIBIN):
 	def __init__(self, units=None, upgrades=None, techs=None, stat_txt=None):
 		AIBIN.__init__(self, False, units, upgrades, techs, stat_txt)
